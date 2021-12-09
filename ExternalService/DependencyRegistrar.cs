@@ -1,9 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-
-namespace Services
+namespace ExternalService
 {
-    public static class DependecyRegister
+    public static class DependencyRegistrar
     {
         public static void RegisterExternalServices(this IServiceCollection services)
         {

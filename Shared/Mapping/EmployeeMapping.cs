@@ -1,19 +1,15 @@
 ﻿using Domain.DataModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Domain.Dto._Base;
+using Domain.Dto.Employee;
+using Shared.Model.Employee;
 
-namespace Domain.Mapping
+namespace Shared.Mapping
 {
     public static class EmployeeMapping
     {
+        #region EmployeeViewModel => EmployeeDto
 
-        #region Employee => EmployeeDto
-
-        public static EmployeeDto ToDto(this Employee model)
+        public static EmployeeDto ToDto(this EmployeeViewModel model)
         {
             return new EmployeeDto
             {
@@ -48,11 +44,11 @@ namespace Domain.Mapping
 
         #endregion
 
-        #region EmployeeDto => Employee
+        #region EmployeeDto => EmployeeViewModel
 
-        public static Employee ToDataModel(this EmployeeDto model)
+        public static EmployeeViewModel ToViewModel(this EmployeeDto model)
         {
-            return new Employee
+            return new EmployeeViewModel
             {
                 AccessForms = model.AccessForms,
                 BirthDate = model.BirthDate,
@@ -85,26 +81,41 @@ namespace Domain.Mapping
 
         #endregion
 
-        #region IEnumerable<EmployeeDto> => IEnumerable<Employee>
+        #region IEnumerable<EmployeeDto> => IEnumerable<EmployeeViewModel>
 
-        public static IEnumerable<Employee> ToDataModelList(this IEnumerable<EmployeeDto> model) => model.Select(ToDataModel);
-
-        #endregion
-
-        #region IEnumerable<Employee> => IEnumerable<EmployeeDto>
-
-        public static IEnumerable<EmployeeDto> ToDtoList(this IEnumerable<Employee> model) => model.Select(ToDto);
+        public static IEnumerable<EmployeeViewModel> ToViewModelList(this IEnumerable<EmployeeDto> model) => model.Select(ToViewModel);
 
         #endregion
 
-        #region PagedResultDto<Employee> => PagedResultDto<EmployeeDto>
+        #region IEnumerable<EmployeeViewModel> => IEnumerable<EmployeeDto>
 
-        public static PagedResultDto<EmployeeDto> ToPagedResultDto(this PagedResultDto<Employee> model)
+        public static IEnumerable<EmployeeDto> ToDtoList(this IEnumerable<EmployeeViewModel> model) => model.Select(ToDto);
+
+        #endregion
+
+        #region PagedResultDto<EmployeeDto> => PagedResultDto<EmployeeViewModel>
+
+        public static PagedResultDto<EmployeeViewModel> ToPagedResultViewModel(this PagedResultDto<EmployeeDto> model)
         {
-            return new PagedResultDto<EmployeeDto>
+            return new PagedResultDto<EmployeeViewModel>
             {
-                List = model.List.ToDtoList(),
+                List = model.List.ToViewModelList(),
                 Total = model.Total
+            };
+        }
+
+        #endregion
+
+        #region MyRegion
+
+        public static EmployeePagedQueryDto ToDto(this EmployeePagedQueryViewModel model)
+        {
+            return new EmployeePagedQueryDto
+            {
+                Name = model?.Name?.Trim(),
+                OrderField = model?.OrderField?.Trim(),
+                PageIndex = model.PageIndex,
+                PageSize = model.PageSize
             };
         }
 

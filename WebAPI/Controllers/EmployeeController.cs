@@ -1,5 +1,7 @@
 ﻿using Domain.Service;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Mapping;
+using Shared.Model.Employee;
 
 namespace WebAPI.Controllers
 {
@@ -15,9 +17,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> List()
+        public async Task<IActionResult> List([FromQuery] EmployeePagedQueryViewModel viewModel)
         {
-            return Ok(await _employeeService.List());
+            return Ok(await _employeeService.ListAsync(viewModel.ToDto()));
         }
     }
 }

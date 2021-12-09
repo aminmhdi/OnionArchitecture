@@ -1,10 +1,9 @@
 ﻿using Domain.Service;
 using Microsoft.Extensions.DependencyInjection;
-using Service;
 
-namespace Services
+namespace Service
 {
-    public static class DependecyRegister
+    public static class DependencyRegistrar
     {
         public static void RegisterServices(this IServiceCollection services)
         {

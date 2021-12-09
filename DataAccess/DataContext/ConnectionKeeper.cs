@@ -1,6 +1,5 @@
 ﻿using Domain.DataAccess.DataContext;
 using Domain.Dto._Base;
-using Microsoft.Extensions.Options;
 using Oracle.ManagedDataAccess.Client;
 using System.Data;
 

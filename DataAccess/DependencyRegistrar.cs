@@ -10,12 +10,14 @@ using Domain.DataAccess.Repository;
 
 namespace DataAccess
 {
-    public static class DependecyRegistrar
+    public static class DependencyRegistrar
     {
         public static void RegisterDataAccess(this IServiceCollection services)
         {
             services.AddSingleton<IConnectionKeeper, ConnectionKeeper>();
             services.AddSingleton(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+
+            services.AddTransient<IEmployeeRepository, EmployeeRepository>();
         }
         
         public static ApplicationSettingsDto GetApplicationSettings(this IServiceCollection services)

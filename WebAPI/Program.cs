@@ -1,9 +1,7 @@
 using DataAccess;
 using Domain.Dto._Base;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Options;
-using Services;
-using System.Configuration;
+using ExternalService;
+using Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
