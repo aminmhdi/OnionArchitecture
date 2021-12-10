@@ -3,7 +3,6 @@ using Domain.DataAccess.DataContext;
 using Domain.DataAccess.Repository;
 using System.Data;
 using Domain.Dto._Base;
-using Domain.Enumeration;
 
 namespace DataAccess.Repository
 {

@@ -1,5 +1,4 @@
-﻿using Domain.DataModel.Contracts;
-using Domain.Enumeration;
+﻿using Domain.Enumeration;
 
 namespace Domain.DataModel
 {
