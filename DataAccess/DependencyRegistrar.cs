@@ -1,5 +1,6 @@
 ﻿
 
+using DataAccess.Configuration.Register;
 using Domain.Dto._Base;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +15,8 @@ namespace DataAccess
     {
         public static void RegisterDataAccess(this IServiceCollection services)
         {
+            EntityConfig.SetEntitiesConfigurations();
+
             services.AddSingleton<IConnectionKeeper, ConnectionKeeper>();
             services.AddSingleton(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 
