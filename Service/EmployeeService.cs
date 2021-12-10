@@ -9,6 +9,8 @@ namespace Service
 {
     public class EmployeeService : IEmployeeService
     {
+        #region Constructor
+
         private readonly IEmployeeRepository _employeeRepository;
 
         public EmployeeService
@@ -19,9 +21,15 @@ namespace Service
             _employeeRepository = employeeRepository;
         }
 
+        #endregion
+
+        #region List
+
         public async Task<PagedResultDto<EmployeeDto>> ListAsync(EmployeePagedQueryDto dto)
         {
             return (await _employeeRepository.ListAsync(dto)).ToPagedResultDto();
         }
+
+        #endregion
     }
 }
