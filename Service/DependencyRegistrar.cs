@@ -8,6 +8,9 @@ namespace Service
         public static void RegisterServices(this IServiceCollection services)
         {
             services.AddTransient<IEmployeeService, EmployeeService>();
+            services.AddTransient<IPermissionService, PermissionService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IUserPermissionService, UserPermissionService>();
         }
     }
 }
