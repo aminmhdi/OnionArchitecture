@@ -38,7 +38,8 @@ namespace Shared.Mapping
                 Team = model.Team,
                 Username = model.Username,
                 VFBizFormNo = model.VFBizFormNo,
-                Workplace = model.Workplace
+                Workplace = model.Workplace,
+                AmdocsSAPCode = model.AmdocsSAPCode
             };
         }
 
@@ -75,7 +76,8 @@ namespace Shared.Mapping
                 Team = model.Team,
                 Username = model.Username,
                 VFBizFormNo = model.VFBizFormNo,
-                Workplace = model.Workplace
+                Workplace = model.Workplace,
+                AmdocsSAPCode = model.AmdocsSAPCode
             };
         }
 

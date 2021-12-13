@@ -7,5 +7,9 @@ namespace Domain.Service
     public interface IEmployeeService
     {
         Task<PagedResultDto<EmployeeDto>> ListAsync(EmployeePagedQueryDto dto);
+        Task<int> CreateAsync(EmployeeDto dto);
+        Task<int> EditAsync(EmployeeDto dto);
+        Task<EmployeeDto> GetAsync(int id);
+        Task<int> DeleteAsync(int id);
     }
 }

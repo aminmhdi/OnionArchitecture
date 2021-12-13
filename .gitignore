@@ -342,4 +342,4 @@ healthchecksdb
 .vs/
 *.cache
 *.ide-wal
-/QuizzyEngine/Presentation/Presentation.WebApi/Logs
+WebAPI/Logs

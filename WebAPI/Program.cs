@@ -2,6 +2,7 @@ using DataAccess;
 using Domain.Dto._Base;
 using ExternalService;
 using Service;
+using WebAPI.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,8 @@ builder.Services.RegisterDataAccess();
 builder.Services.RegisterServices();
 builder.Services.RegisterExternalServices();
 
+SerilogLogger.Create();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -27,10 +30,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<ExceptionHandlerMiddleware>();
+app.UseDeveloperExceptionPage();
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
