@@ -1,4 +1,6 @@
-﻿using Domain.DataAccess.Repository;
+﻿using Dapper.FastCrud;
+using DataAccess.Configuration.Register;
+using Domain.DataAccess.Repository;
 using Domain.DataModel;
 
 namespace DataAccess.Repository
@@ -23,7 +25,7 @@ namespace DataAccess.Repository
         public async Task<int> DeletePermissionsForUserAsync(int userId, IEnumerable<int> permissionIds)
         {
             var sql = @$"
-                DELETE FROM portal_user_permissions
+                DELETE FROM {Sql.Table<UserPermission>().ToTableName()}
                 WHERE userId=:userId
                 AND permissionId IN ({GetListConditions(permissionIds)})"; 
             return await _userPermissionRepository.ExecuteAsync(sql, new { userId });
@@ -36,7 +38,7 @@ namespace DataAccess.Repository
 
         private static string GetBulkInsertStatement(int userId, IEnumerable<int> permissionIds)
         {
-            return permissionIds.Select(p => @$"INTO portal_user_permissions (userId, permissionId) VALUES ({userId}, {p})").Aggregate((a, b) => $"{a}\n {b}");
+            return permissionIds.Select(p => @$"INTO {Sql.Table<UserPermission>().ToTableName()} (userId, permissionId) VALUES ({userId}, {p})").Aggregate((a, b) => $"{a}\n {b}");
         }
     }
 }
