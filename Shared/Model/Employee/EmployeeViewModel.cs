@@ -30,5 +30,6 @@ namespace Shared.Model.Employee
         public string LaptopModel { get; set; }
         public DateTime? BirthDate { get; set; }
         public string Notes { get; set; }
+        public string AmdocsSAPCode { get; set; }
     }
 }

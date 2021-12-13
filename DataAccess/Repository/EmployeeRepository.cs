@@ -1,5 +1,6 @@
 ﻿using Dapper.FastCrud;
 using DataAccess.Configuration.Register;
+using DataAccess.Helper;
 using Domain.DataAccess.Repository;
 using Domain.DataModel;
 using Domain.Dto._Base;
@@ -43,5 +44,44 @@ namespace DataAccess.Repository
 
         #endregion
 
+        #region Create
+
+        public async Task<int> CreateAsync(Employee model)
+        {
+            var query = QueryGenerator.CreateInsertQuery<Employee>();
+            return await _repository.ExecuteAsync(query, model);
+        }
+
+        #endregion
+
+        #region Edit
+
+        public async Task<int> EditAsync(Employee model)
+        {
+            var query = QueryGenerator.CreateUpdateQuery<Employee>();
+            return await _repository.ExecuteAsync(query, model);
+        }
+
+        #endregion
+
+        #region Get
+
+        public async Task<Employee> GetAsync(int id)
+        {
+            var sql = QueryGenerator.CreateSelectQuery<Employee>();
+            return await _repository.QueryFirstOrDefaultAsync(sql, new { Id = id });
+        }
+
+        #endregion
+
+        #region Delete
+
+        public async Task<int> DeleteAsync(int id)
+        {
+            var sql = QueryGenerator.CreateDeleteQuery<Employee>();
+            return await _repository.ExecuteAsync(sql, new { Id = id });
+        }
+
+        #endregion
     }
 }
