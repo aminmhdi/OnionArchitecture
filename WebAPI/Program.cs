@@ -1,16 +1,19 @@
 using DataAccess;
 using Domain.Dto._Base;
 using ExternalService;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+builder.Services.AddScoped(provider => provider.GetRequiredService<IActionContextAccessor>().ActionContext.ModelState);
 
 builder.Services.AddSingleton(builder.Configuration.Get<ApplicationSettingsDto>());
 

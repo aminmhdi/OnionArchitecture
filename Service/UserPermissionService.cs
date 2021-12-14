@@ -4,22 +4,25 @@ using Domain.Dto.Permission;
 using Domain.Dto.UserPermission;
 using Domain.Mapping;
 using Domain.Service;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Service
 {
     public class UserPermissionService : IUserPermissionService
     {
+        private readonly ModelStateDictionary _modelState;
         private readonly IUserRepository _userRepository;
         private readonly IPermissionRepository _permissionRepository;
         private readonly IUserPermissionRepository _userPermissionRepository;
 
         public UserPermissionService
         (
+            ModelStateDictionary modelState,
             IUserRepository userRepository,
             IPermissionRepository permissionRepository,
             IUserPermissionRepository userPermissionRepository)
         {
-
+            _modelState = modelState;
             _userRepository = userRepository;
             _permissionRepository = permissionRepository;
             _userPermissionRepository = userPermissionRepository;
@@ -37,12 +40,16 @@ namespace Service
         {
             var user = await _userRepository.GetAsync(updateUserPermissionsDto.Id);
             if (user == null)
-            {
-                throw new InvalidParameterException(nameof(updateUserPermissionsDto.Id));
-            }
+                _modelState.AddModelError(nameof(UpdateUserPermissionsDto.Id), "User not found");
+
+            await ValidatePermissionIdsAsync(updateUserPermissionsDto.PermissionIds);
+
+            if (!_modelState.IsValid)
+                return;
+
             var currentPermissionIds = (await _permissionRepository.ListByUserIdAsync(user.Id)).Select(p => p.Id);
             var toDeletePermission = currentPermissionIds.Except(updateUserPermissionsDto.PermissionIds);
-            if(toDeletePermission.Any())
+            if (toDeletePermission.Any())
             {
                 await _userPermissionRepository.DeletePermissionsForUserAsync(user.Id, toDeletePermission);
             }
@@ -50,6 +57,18 @@ namespace Service
             var toInsertPermissions = updateUserPermissionsDto.PermissionIds.Except(currentPermissionIds);
             if (toInsertPermissions.Any())
                 await _userPermissionRepository.CreatePermissionsForUserAsync(user.Id, toInsertPermissions);
+        }
+
+        private async Task ValidatePermissionIdsAsync(IEnumerable<int> permissionIds)
+        {
+            var allPermissionsIds = (await _permissionRepository.ListAsync()).Select(p => p.Id);
+            foreach (var permissionId in permissionIds)
+            {
+                if (!allPermissionsIds.Contains(permissionId))
+                {
+                    _modelState.AddModelError(nameof(UpdateUserPermissionsDto.PermissionIds), $"Invalid Permission id {permissionId}");
+                }
+            }
         }
     }
 }

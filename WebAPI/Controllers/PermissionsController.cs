@@ -3,9 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {
-    [ApiController]
     [Route("[controller]")]
-    public class PermissionsController : ControllerBase
+    public class PermissionsController : ApiControllerBase
     {
         private readonly IPermissionService _permissionService;
 

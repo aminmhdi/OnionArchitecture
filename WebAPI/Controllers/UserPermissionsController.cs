@@ -5,8 +5,7 @@ using Shared.Model.UserPermission;
 
 namespace WebAPI.Controllers
 {
-    [ApiController]
-    public class UserPermissionsController : ControllerBase
+    public class UserPermissionsController : ApiControllerBase
     {
         private readonly IUserPermissionService _userPermissionService;
 

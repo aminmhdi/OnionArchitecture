@@ -5,9 +5,8 @@ using Shared.Model.User;
 
 namespace WebAPI.Controllers
 {
-    [ApiController]
     [Route("[controller]")]
-    public class UsersController : ControllerBase
+    public class UsersController : ApiControllerBase
     {
         private readonly IUserService _userService;
 

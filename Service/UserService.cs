@@ -2,18 +2,22 @@
 using Domain.Dto.User;
 using Domain.Mapping;
 using Domain.Service;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Service
 {
     public class UserService : IUserService
     {
+        private readonly ModelStateDictionary _modelState;
         private readonly IUserRepository _userRepository;
 
         public UserService
         (
+            ModelStateDictionary modelState,
             IUserRepository userRepository
         )
         {
+            _modelState = modelState;
             _userRepository = userRepository;
         }
         public async Task<UserDto> GetAsync(int id)
@@ -34,13 +38,12 @@ namespace Service
         {
             var model = await _userRepository.GetByUsernameAsync(userDto.Username);
             if (model != null)
-            {
-                throw new InvalidParameterException(nameof(userDto.Username));
-            }
-            if (model == null)
-            {
-                var result = await _userRepository.CreateAsync(userDto.ToDataModel());
-            }
+                _modelState.AddModelError(nameof(CreateUserDto.Username), "Username already exists");
+
+            if (!_modelState.IsValid)
+                return;
+
+            await _userRepository.CreateAsync(userDto.ToDataModel());
         }
         public async Task DeleteAsync(int id)
         {
