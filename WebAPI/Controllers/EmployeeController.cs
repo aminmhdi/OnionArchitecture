@@ -5,9 +5,8 @@ using Shared.Model.Employee;
 
 namespace WebAPI.Controllers
 {
-    [ApiController]
     [Route("[controller]")]
-    public class EmployeeController : ControllerBase
+    public class EmployeeController : ApiControllerBase
     {
         #region Constractor
 

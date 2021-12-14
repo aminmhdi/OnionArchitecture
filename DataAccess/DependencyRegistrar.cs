@@ -21,8 +21,11 @@ namespace DataAccess
             services.AddSingleton(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 
             services.AddTransient<IEmployeeRepository, EmployeeRepository>();
+            services.AddTransient<IPermissionRepository, PermissionRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IUserPermissionRepository, UserPermissionRepository>();
         }
-        
+
         public static ApplicationSettingsDto GetApplicationSettings(this IServiceCollection services)
         {
             var provider = services.BuildServiceProvider();

@@ -5,6 +5,7 @@ using Domain.DataModel;
 using Shared.Model._Base;
 using Serilog;
 using Shared.Mapping;
+using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Middlewares
 {
@@ -61,10 +62,10 @@ namespace WebAPI.Middlewares
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-            var responseText = new ErrorViewModel
+            var responseText = new ProblemDetails
             {
-                StatusCode = context.Response.StatusCode,
-                Message = "Internal Server Error"
+                Status = context.Response.StatusCode,
+                Detail = "Internal Server Error"
             }.ObjectToJson();
 
             await context.Response.WriteAsync(responseText);
