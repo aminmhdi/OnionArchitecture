@@ -87,7 +87,8 @@ namespace WebAPI.Controllers
         [HttpGet("ExportExcel")]
         public async Task<IActionResult> ExportExcel()
         {
-            return null;
+            var result = await _employeeService.ExportExcel();
+            return result != null ? Ok(true) : NotFound();
         }
 
         #endregion

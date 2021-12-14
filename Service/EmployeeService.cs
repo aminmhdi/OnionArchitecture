@@ -82,16 +82,20 @@ namespace Service
 
         public async Task<bool> ImportExcel(UploadFileDto dto)
         {
-            var list = await ExcelToEmployeeList(dto);
+            var list = await ExcelFıleToEmployeeList(dto);
+
             foreach (var item in list)
-            {
                 await CreateAsync(item);
-            }
 
             return true;
         }
 
-        private async Task<IEnumerable<EmployeeDto>> ExcelToEmployeeList(UploadFileDto dto)
+        public Task<byte[]> ExportExcel(UploadFileDto dto)
+        {
+            throw new NotImplementedException();
+        }
+
+        private async Task<IEnumerable<EmployeeDto>> ExcelFıleToEmployeeList(UploadFileDto dto)
         {
             await using MemoryStream memStream = new(dto.FileContent);
             ExcelPackage package = new(memStream);
