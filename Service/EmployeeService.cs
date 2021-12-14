@@ -90,7 +90,7 @@ namespace Service
             return true;
         }
 
-        public Task<byte[]> ExportExcel(UploadFileDto dto)
+        public Task<byte[]> ExportExcel()
         {
             throw new NotImplementedException();
         }
