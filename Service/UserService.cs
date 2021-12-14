@@ -8,6 +8,7 @@ namespace Service
 {
     public class UserService : IUserService
     {
+        #region Constructor
         private readonly ModelStateDictionary _modelState;
         private readonly IUserRepository _userRepository;
 
@@ -20,6 +21,9 @@ namespace Service
             _modelState = modelState;
             _userRepository = userRepository;
         }
+        #endregion
+
+        #region Get
         public async Task<UserDto> GetAsync(int id)
         {
             var model = await _userRepository.GetAsync(id);
@@ -30,13 +34,19 @@ namespace Service
             var model = await _userRepository.GetByUsernameAsync(username);
             return model.ToDto();
         }
+        #endregion
+
+        #region List
         public async Task<IEnumerable<UserDto>> ListAsync()
         {
             return (await _userRepository.ListAsync()).ToDtoList();
         }
+        #endregion
+
+        #region Create
         public async Task CreateAsync(CreateUserDto userDto)
         {
-            var model = await _userRepository.GetByUsernameAsync(userDto.Username);
+            var model = await GetByUsernameAsync(userDto.Username);
             if (model != null)
                 _modelState.AddModelError(nameof(CreateUserDto.Username), "Username already exists");
 
@@ -45,10 +55,14 @@ namespace Service
 
             await _userRepository.CreateAsync(userDto.ToDataModel());
         }
+        #endregion
+
+        #region Delete
         public async Task DeleteAsync(int id)
         {
             await _userRepository.DeleteAsync(id);
         }
+        #endregion
 
     }
 }

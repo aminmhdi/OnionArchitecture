@@ -7,6 +7,7 @@ namespace Service
 {
     public class PermissionService : IPermissionService
     {
+        #region Constructor
         private readonly IPermissionRepository _permissionRepository;
 
         public PermissionService
@@ -16,10 +17,14 @@ namespace Service
         {
             _permissionRepository = permissionRepository;
         }
+        #endregion
+
+        #region List
 
         public async Task<IEnumerable<PermissionDto>> ListAsync()
         {
             return (await _permissionRepository.ListAsync()).ToDtoList();
         }
+        #endregion
     }
 }

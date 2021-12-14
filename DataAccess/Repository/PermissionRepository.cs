@@ -7,13 +7,15 @@ namespace DataAccess.Repository
 {
     public class PermissionRepository : IPermissionRepository
     {
+        #region Constructor
         private readonly IBaseRepository<Permission> _repository;
-
         public PermissionRepository(IBaseRepository<Permission> repository)
         {
             _repository = repository;
         }
+        #endregion
 
+        #region List
         public async Task<IEnumerable<Permission>> ListAsync()
         {
             var sql = $"SELECT * FROM {Sql.Table<Permission>().ToTableName()} ";
@@ -29,5 +31,6 @@ namespace DataAccess.Repository
                 ";
             return await _repository.QueryAsync(sql, new {id});
         }
+        #endregion
     }
 }
