@@ -11,5 +11,7 @@ namespace Domain.Service
         Task<int> EditAsync(EmployeeDto dto);
         Task<EmployeeDto> GetAsync(int id);
         Task<int> DeleteAsync(int id);
+        Task<bool> ImportExcel(UploadFileDto dto);
+        Task<byte[]> ExportExcel();
     }
 }

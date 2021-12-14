@@ -108,7 +108,7 @@ namespace Shared.Mapping
 
         #endregion
 
-        #region MyRegion
+        #region EmployeePagedQueryViewModel => EmployeePagedQueryDto
 
         public static EmployeePagedQueryDto ToDto(this EmployeePagedQueryViewModel model)
         {

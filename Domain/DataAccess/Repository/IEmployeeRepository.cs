@@ -10,6 +10,8 @@ namespace Domain.DataAccess.Repository
 
         Task<int> CreateAsync(Employee model);
 
+        Task<int> CreateBulkAsync(IEnumerable<Employee> list);
+
         Task<int> EditAsync(Employee model);
 
         Task<Employee> GetAsync(int id);

@@ -1,6 +1,4 @@
-﻿
-
-using DataAccess.Configuration.Register;
+﻿using DataAccess.Configuration.Register;
 using Domain.Dto._Base;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.DependencyInjection;
