@@ -1,5 +1,7 @@
 ﻿using Domain.DataModel;
 using Domain.Dto._Base;
+using Domain.Dto.Employee;
+using Domain.Enumeration;
 
 namespace Domain.Mapping
 {
@@ -104,6 +106,49 @@ namespace Domain.Mapping
                 Total = model.Total
             };
         }
+
+        #endregion
+
+        #region EmployeeExcelDto => EmployeeDto
+
+        public static EmployeeDto ToEmployeeDto(this EmployeeExcelDto model)
+        {
+            return new EmployeeDto
+            {
+                AccessForms = model.AccessForms,
+                BirthDate = model.BirthDate.ToNullableDateTime(),
+                Country = model.Country,
+                DomainSquad = model.DomainSquad,
+                Email = model.Email,
+                FormDate = model.FormDate.ToNullableDateTime(),
+                GovernanceHandler = model.GovernanceHandler,
+                GSMNo = model.GSMNo,
+                LaptopModel = model.LaptopModel,
+                LaptopVdiForm = model.LaptopVdiForm,
+                LaptopVdiFormDate = model.LaptopVdiFormDate.ToNullableDateTime(),
+                LaptopVdiId = model.LaptopVdiId,
+                LeaveDate = model.LeaveDate.ToNullableDateTime(),
+                Name = model.Name,
+                Notes = model.Notes,
+                OnboardDate = model.OnboardDate.ToNullableDateTime(),
+                OTPStatus = model.Status.ToEnum<OTPStatus>(),
+                Payroll = model.Payroll,
+                RequestDate = model.RequestDate.ToNullableDateTime(),
+                SAPSicilNo = model.SAPSicilNo.ToNullableInt32(),
+                Status = model.Status.ToEnum<EmployeeStatus>(),
+                Team = model.Team,
+                Username = model.Username,
+                VFBizFormNo = model.VFBizFormNo,
+                Workplace = model.Workplace,
+                AmdocsSAPCode = model.AmdocsSAPCode
+            };
+        }
+
+        #endregion
+
+        #region IEnumerable<EmployeeExcelDto> => IEnumerable<EmployeeDto>
+
+        public static IEnumerable<EmployeeDto> ToEmployeeDtoList(this IEnumerable<EmployeeExcelDto> model) => model.Select(ToEmployeeDto);
 
         #endregion
     }

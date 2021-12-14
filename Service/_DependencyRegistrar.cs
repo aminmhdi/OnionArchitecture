@@ -7,6 +7,7 @@ namespace Service
     {
         public static void RegisterServices(this IServiceCollection services)
         {
+            services.AddSingleton<IEPPlusService, EPPlusService>();
             services.AddTransient<IEmployeeService, EmployeeService>();
         }
     }

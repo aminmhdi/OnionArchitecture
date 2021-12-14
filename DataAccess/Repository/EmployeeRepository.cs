@@ -52,6 +52,16 @@ namespace DataAccess.Repository
             return await _repository.ExecuteAsync(query, model);
         }
 
+        public async Task<int> CreateBulkAsync(IEnumerable<Employee> list)
+        {
+            foreach (var item in list)
+            {
+                await CreateAsync(item);
+            }
+
+            return 1;
+        }
+
         #endregion
 
         #region Edit
@@ -68,7 +78,7 @@ namespace DataAccess.Repository
 
         public async Task<Employee> GetAsync(int id)
         {
-            var sql = QueryGenerator.CreateSelectQuery<Employee>();
+            var sql = QueryGenerator.CreateSelectByPrimaryKeyQuery<Employee>();
             return await _repository.QueryFirstOrDefaultAsync(sql, new { Id = id });
         }
 

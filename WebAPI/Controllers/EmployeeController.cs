@@ -1,6 +1,7 @@
 ﻿using Domain.Service;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Mapping;
+using Shared.Model._Base;
 using Shared.Model.Employee;
 
 namespace WebAPI.Controllers
@@ -65,11 +66,28 @@ namespace WebAPI.Controllers
 
         #region Delete
 
-        [HttpDelete]
+        [HttpDelete("Delete")]
         public async Task<IActionResult> Delete([FromBody] int id)
         {
             var result = await _employeeService.DeleteAsync(id);
             return result > 0 ? Ok(true) : NotFound();
+        }
+
+        #endregion
+
+        #region Excel
+
+        [HttpPost("ImportExcel")]
+        public async Task<IActionResult> ImportExcel(UploadFileViewModel viewModel)
+        {
+            var result = await _employeeService.ImportExcel(viewModel.ToDto());
+            return result ? Ok(true) : NotFound();
+        }
+
+        [HttpGet("ExportExcel")]
+        public async Task<IActionResult> ExportExcel()
+        {
+            return null;
         }
 
         #endregion

@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Domain.Dto._Base;
+using Newtonsoft.Json;
+using Shared.Model._Base;
 
 namespace Shared.Mapping
 {
@@ -8,5 +10,15 @@ namespace Shared.Mapping
         {
             return JsonConvert.SerializeObject(model);
         }
+
+        public static UploadFileDto ToDto(this UploadFileViewModel model)
+        {
+            return new UploadFileDto
+            {
+                FileContent = model.FileContent,
+                FileName = model.FileName
+            };
+        }
+
     }
 }

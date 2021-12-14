@@ -4,6 +4,7 @@ using Domain.Dto._Base;
 using Domain.Dto.Employee;
 using Domain.Mapping;
 using Domain.Service;
+using OfficeOpenXml;
 
 namespace Service
 {
@@ -12,13 +13,16 @@ namespace Service
         #region Constructor
 
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly IEPPlusService _epPlusService;
 
         public EmployeeService
         (
-            IEmployeeRepository employeeRepository
+            IEmployeeRepository employeeRepository,
+            IEPPlusService epPlusService
         )
         {
             _employeeRepository = employeeRepository;
+            _epPlusService = epPlusService;
         }
 
         #endregion
@@ -70,6 +74,33 @@ namespace Service
                 return await _employeeRepository.DeleteAsync(id);
 
             return 0;
+        }
+
+        #endregion
+
+        #region Excel
+
+        public async Task<bool> ImportExcel(UploadFileDto dto)
+        {
+            var list = await ExcelToEmployeeList(dto);
+            foreach (var item in list)
+            {
+                await CreateAsync(item);
+            }
+
+            return true;
+        }
+
+        private async Task<IEnumerable<EmployeeDto>> ExcelToEmployeeList(UploadFileDto dto)
+        {
+            await using MemoryStream memStream = new(dto.FileContent);
+            ExcelPackage package = new(memStream);
+            var workSheet = package.Workbook.Worksheets[0];
+
+            var employeeExcelDtoList = _epPlusService.ConvertSheetToObjects<EmployeeExcelDto>(workSheet);
+            var dtoList = employeeExcelDtoList.ToEmployeeDtoList();
+
+            return dtoList;
         }
 
         #endregion

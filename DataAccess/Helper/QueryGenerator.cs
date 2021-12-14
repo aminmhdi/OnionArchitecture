@@ -54,7 +54,7 @@ namespace DataAccess.Helper
             return query;
         }
 
-        public static string CreateSelectQuery<T>()
+        public static string CreateSelectByPrimaryKeyQuery<T>()
         {
             var query = $"SELECT * FROM {Sql.Table<T>().ToTableName()} [WHERE]";
 
