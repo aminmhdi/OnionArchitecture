@@ -13,6 +13,9 @@ namespace Domain.DataAccess.Repository
         T QueryFirstOrDefault(string sql, object param = null, int? commandTimeout = default, CommandType? commandType = default);
         SqlMapper.GridReader QueryMultiple(string sql, object param = null, int? commandTimeout = default, CommandType? commandType = default);
         PagedResultDto<T> GetPaged(string sql, object param, int pageSize, int pageIndex, string orderField, int? commandTimeout);
+        void Insert(T model);
+        bool Update(T model);
+        bool Delete(T model);
 
         //Async
         Task<int> ExecuteAsync(string sql, object param = null, int? commandTimeout = default, CommandType? commandType = default);
@@ -21,5 +24,8 @@ namespace Domain.DataAccess.Repository
         Task<T> QueryFirstOrDefaultAsync(string sql, object param = null, int? commandTimeout = default, CommandType? commandType = default);
         Task<SqlMapper.GridReader> QueryMultipleAsync(string sql, object param = null, int? commandTimeout = default, CommandType? commandType = default);
         Task<PagedResultDto<T>> GetPagedAsync(string sql, object param, int pageSize, int pageIndex, string orderField, int? commandTimeout);
+        Task InsertAsync(T model);
+        Task<bool> UpdateAsync(T model);
+        Task<bool> DeleteAsync(T model);
     }
 }

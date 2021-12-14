@@ -2,6 +2,7 @@
 using Domain.DataAccess.DataContext;
 using Domain.DataAccess.Repository;
 using System.Data;
+using Dapper.FastCrud;
 using Domain.Dto._Base;
 
 namespace DataAccess.Repository
@@ -94,6 +95,24 @@ namespace DataAccess.Repository
 
                 throw;
             }
+        }
+
+        public void Insert(T model)
+        {
+            using var db = _connectionKeeper.GetNewConnection();
+            db.Insert(model);
+        }
+
+        public bool Update(T model)
+        {
+            using var db = _connectionKeeper.GetNewConnection();
+            return db.Update(model);
+        }
+
+        public bool Delete(T model)
+        {
+            using var db = _connectionKeeper.GetNewConnection();
+            return db.Delete(model);
         }
 
         #endregion
@@ -205,6 +224,24 @@ namespace DataAccess.Repository
 
                 throw;
             }
+        }
+
+        public async Task InsertAsync(T model)
+        {
+            using var db = _connectionKeeper.GetNewConnection();
+            await db.InsertAsync(model);
+        }
+
+        public async Task<bool> UpdateAsync(T model)
+        {
+            using var db = _connectionKeeper.GetNewConnection();
+            return await db.UpdateAsync(model);
+        }
+
+        public async Task<bool> DeleteAsync(T model)
+        {
+            using var db = _connectionKeeper.GetNewConnection();
+            return await db.DeleteAsync(model);
         }
 
         #endregion

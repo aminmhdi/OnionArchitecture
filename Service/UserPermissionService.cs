@@ -10,6 +10,7 @@ namespace Service
 {
     public class UserPermissionService : IUserPermissionService
     {
+        #region Constructor
         private readonly ModelStateDictionary _modelState;
         private readonly IUserRepository _userRepository;
         private readonly IPermissionRepository _permissionRepository;
@@ -27,15 +28,18 @@ namespace Service
             _permissionRepository = permissionRepository;
             _userPermissionRepository = userPermissionRepository;
         }
+        #endregion
 
-
+        #region List
         public async Task<IEnumerable<PermissionDto>> ListAsync(int userId)
         {
             var user = await _userRepository.GetAsync(userId);
             var permissions = await _permissionRepository.ListByUserIdAsync(user.Id);
             return permissions.ToDtoList();
         }
+        #endregion
 
+        #region Update
         public async Task UpdateUserPermissionsAsync(UpdateUserPermissionsDto updateUserPermissionsDto)
         {
             var user = await _userRepository.GetAsync(updateUserPermissionsDto.Id);
@@ -70,5 +74,7 @@ namespace Service
                 }
             }
         }
+        #endregion
+
     }
 }

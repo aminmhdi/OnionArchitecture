@@ -1,6 +1,6 @@
 ﻿namespace Domain.DataModel.Contracts
 {
-    internal interface IIntegerBaseEntity
+    public interface IIntegerBaseEntity
     {
         int Id { get; set; }
     }
